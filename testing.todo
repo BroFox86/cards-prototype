@@ -1,0 +1,9 @@
+# Project testing ToDo
+✔ Test adaptive features @done (2018-7-5 00:18:54)
+✔ Test interactive elements @done (2018-7-5 00:18:56)
+✔ Overflow test @done (2018-7-5 00:58:04)
+✔ Behaviour on disabled pictures @done (2018-7-5 00:20:11)
+✔ Check image widths and sizes @done (2018-7-5 00:50:25)
+✔ Check all source files @done (2018-7-5 00:23:30)
+✔ Test in all supported browsers @done (2018-7-5 21:22:03)
+✔ Check build @done (2018-7-5 21:41:46)
