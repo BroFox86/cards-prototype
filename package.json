@@ -1,9 +1,9 @@
 {
-  "name": "start-bem-template",
+  "name": "cards-prototype",
   "author": "Daur Gamisonia",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/BroFox86/cards-prototype"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
@@ -40,7 +40,7 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "ie 10-11"
+    "ie 11"
   ],
   "dependencies": {
     "normalize.css": "^8.0.0"

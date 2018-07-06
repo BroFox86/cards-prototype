@@ -11,11 +11,11 @@
     }
   }
 
-  // Set negative margin to fix the gap in IE11/Edge
+  
   &__header {
     display: flex;
     height: 44px;
-    margin-bottom: -1px; 
+    margin-bottom: -1px; // Fix the gap in IE11/Edge
   }
 
   &__corner {

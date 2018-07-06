@@ -10,6 +10,7 @@ block head
     meta(charset="utf-8")
     title= title
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="robots" content="noindex")
     meta(name="author" content="Daur Gamisonia, daurgam@gmail.com, Russia | Moscow")
 
     // build:css css/styles.min.css 
@@ -17,7 +18,7 @@ block head
     link(href="css/main.css" rel="stylesheet")
     // endbuild 
 
-body.page
+body.page(lang="ru")
   <!--[if lte IE 10]>
   <p class="page__outdated">Вы используете <strong>устаревший</strong> браузер. Пожалуйста, <a href="http://browsehappy.com/">обновите свой браузер</a>, чтобы улучшить качество отображения сайта.</p>
   <![endif]-->
