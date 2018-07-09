@@ -253,10 +253,7 @@ gulp.task("scripts:dist", function() {
 
 gulp.task("images:minify", function() {
   return gulp
-    .src([
-      "src/images/!(_)*/**/!(*-responsive)*",
-      "src/images/!(*-responsive)*.*",
-    ])
+    .src("src/images/**")
     .pipe(
       plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
@@ -266,7 +263,7 @@ gulp.task("images:minify", function() {
         imagemin([
           imagemin.optipng(),
           imageminJpegRecompress({
-            plugins: [{ target: 80 }]
+            target: 0.8
           }),
           imageminSvgo({
             plugins: [{ removeViewBox: false }]
