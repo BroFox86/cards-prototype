@@ -7,15 +7,15 @@ block content
   .page__inner
     h1.page__title Ты сегодня покормил кота?
     .page__cards
-      .page__card.card(data-target="card")
-        .card__body(data-toggle="card")
+      .page__card.card(data-toggle="card")
+        .card__body(data-target="cardBtn")
           header.card__header
             .card__corner
             .card__rectangle
-              span.card__desc(data-replace="card") Сказочное заморское яство
+              span.card__desc(data-replace="desc") Сказочное заморское яство
           .card__main
             h2.card__heading Нямушка
-              span.card__subheading(data-get="card") с фуа-гра
+              span.card__feature(data-get="feature") с фуа-гра
             ul.card__list
               li.card__list-item 10 порций
               li.card__list-item мышь в подарок
@@ -24,22 +24,22 @@ block content
               .card__weight
                 span.card__amount 0,5 
                 div.card__measure кг
-        footer.card__footer(data-replace="card", data-text="Печень утки разварная с артишоками.") 
+        footer.card__footer(data-replace="footer", data-text="Печень утки разварная с артишоками.") 
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-toggle="card", href="#") купи
+              a.card__link(data-replace="footer", href="#") купи
               | .
 
-      .page__card.card(data-target="card")
-        .card__body(data-toggle="card")
+      .page__card.card(data-toggle="card")
+        .card__body(data-target="cardBtn")
           header.card__header
             .card__corner
             .card__rectangle
-              span.card__desc(data-replace="card") Сказочное заморское яство
+              span.card__desc(data-replace="desc") Сказочное заморское яство
           .card__main
             h2.card__heading Нямушка
-              span.card__subheading(data-get="card") с рыбой
+              span.card__feature(data-get="feature") с рыбой
             ul.card__list
               li.card__list-item 40 порций
               li.card__list-item 2 мыши в подарок
@@ -48,22 +48,22 @@ block content
               .card__weight
                 span.card__amount 2 
                 div.card__measure кг
-        footer.card__footer(data-replace="card", data-text="Головы щучьи с чесноком да свежайшая сёмгушка.") 
+        footer.card__footer(data-replace="footer", data-text="Головы щучьи с чесноком да свежайшая сёмгушка.") 
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-toggle="card", href="#") купи
+              a.card__link(data-target="cardBtn", href="#") купи
               | .
 
-      .page__card.card.is-disabled(data-target="card")
-        .card__body(data-toggle="card")
+      .page__card.card.is-disabled(data-toggle="card")
+        .card__body(data-target="cardBtn")
           header.card__header
             .card__corner
             .card__rectangle
-              span.card__desc(data-replace="card") Сказочное заморское яство
+              span.card__desc(data-replace="desc") Сказочное заморское яство
           .card__main
             h2.card__heading Нямушка
-              span.card__subheading(data-get="card") с курой
+              span.card__feature(data-get="feature") с курой
             ul.card__list
               li.card__list-item 100 порций
               li.card__list-item 5 мыши в подарок
@@ -73,9 +73,9 @@ block content
               .card__weight
                 span.card__amount 5 
                 div.card__measure кг
-        footer.card__footer(data-replace="card", data-text="Филе из цыплят с трюфелями в бульоне.") 
+        footer.card__footer(data-replace="footer", data-text="Филе из цыплят с трюфелями в бульоне.") 
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-toggle="card", href="#") купи
+              a.card__link(data-target="cardBtn", href="#") купи
               | .

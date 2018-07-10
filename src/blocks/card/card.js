@@ -1,9 +1,11 @@
 function handleMouseEvents(cardNmb) {
 
-  var cardWrapper = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
-      card        = "[data-toggle='card']",
-      cardDesc    = "header [data-replace='card']",
-      cardFooter  = "footer[data-replace='card']";
+  // Hooks
+  var cardWrapper = "[data-toggle='card']" + ":nth-child(" + cardNmb + ")",
+      cardBtn     = "[data-target='cardBtn']",
+      cardDesc    = "[data-replace='desc']",
+      cardFeature = "[data-get='feature']",
+      cardFooter  = "[data-replace='footer']";
 
   // Initial content
   var descText = $(cardWrapper)
@@ -16,7 +18,7 @@ function handleMouseEvents(cardNmb) {
   // Handle click events //
   /////////////////////////
 
-  $(cardWrapper).on("click", $(card), function(e) {
+  $(cardWrapper).on("click", $(cardBtn), function(e) {
     e.preventDefault();
 
     // Check if the element is selected
@@ -76,7 +78,7 @@ function handleMouseEvents(cardNmb) {
   function disabledCard() {
 
     var featureText = $(cardWrapper)
-        .find("[data-get='card']")
+        .find(cardFeature)
         .text();
 
     $(cardWrapper)
@@ -114,7 +116,7 @@ function handleMouseEvents(cardNmb) {
 }
 
 // Get the number of cards
-var cards = $("[data-target='card']").length;
+var cards = $("[data-toggle='card']").length;
 
 // Add the event listener to each of the card
 for (var i = 1; i <= cards; i++) {
