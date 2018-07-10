@@ -1,17 +1,13 @@
 function handleMouseEvents(cardNmb) {
-  // Hooks
+
   var cardWrapper = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
       card        = "[data-toggle='card']",
-      cardDesc    = "[data-replace='cardDesc']",
-      cardFooter  = "[data-replace='card']";
+      cardDesc    = "header [data-replace='card']",
+      cardFooter  = "footer[data-replace='card']";
 
   // Initial content
   var descText = $(cardWrapper)
-      .find("[data-replace='cardDesc']")
-      .text();
-
-  var featureText = $(cardWrapper)
-      .find("[data-get='card']")
+      .find(cardDesc)
       .text();
 
   var footerContent;
@@ -45,7 +41,7 @@ function handleMouseEvents(cardNmb) {
         .attr("data-click-state", 1)
         .addClass("is-selected");
 
-      // Save default content of the node
+      // Save initial content of the node
       footerContent = $(this)
         .find(cardFooter)
         .children()
@@ -78,11 +74,17 @@ function handleMouseEvents(cardNmb) {
   ///////////////////////////
 
   function disabledCard() {
+
+    var featureText = $(cardWrapper)
+        .find("[data-get='card']")
+        .text();
+
     $(cardWrapper)
       .off("click")
       .find(cardFooter)
       .html("Печалька, " + featureText + " закончился.");
   }
+
   // Check if card is disabled when the page is load
   if ($(cardWrapper).hasClass("is-disabled") == true) {
     disabledCard();
