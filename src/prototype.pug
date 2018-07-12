@@ -7,8 +7,8 @@ block content
   .page__inner
     h1.page__title Ты сегодня покормил кота?
     .page__cards
-      .page__card.card(data-toggle="card")
-        .card__body(data-target="cardBtn")
+      .page__card.card(data-target="card")
+        .card__body(data-trigger="card")
           header.card__header
             .card__corner
             .card__rectangle
@@ -28,11 +28,11 @@ block content
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-target="cardBtn", href="#") купи
+              a.card__link(data-trigger="card", href="#") купи
               | .
 
-      .page__card.card(data-toggle="card")
-        .card__body(data-target="cardBtn")
+      .page__card.card(data-target="card")
+        .card__body(data-trigger="card")
           header.card__header
             .card__corner
             .card__rectangle
@@ -52,11 +52,11 @@ block content
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-target="cardBtn", href="#") купи
+              a.card__link(data-trigger="card", href="#") купи
               | .
 
-      .page__card.card.is-disabled(data-toggle="card")
-        .card__body(data-target="cardBtn")
+      .page__card.card.is-disabled(data-target="card")
+        .card__body(data-trigger="card")
           header.card__header
             .card__corner
             .card__rectangle
@@ -77,5 +77,5 @@ block content
           span
             | Чего сидишь? Порадуй котэ, 
             span.card__buy
-              a.card__link(data-target="cardBtn", href="#") купи
+              a.card__link(data-trigger="card", href="#") купи
               | .

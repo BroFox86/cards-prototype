@@ -41,7 +41,7 @@ var // Common
   imageminJpegRecompress = require("imagemin-jpeg-recompress");
 
 /* ==========================================================================
-   Paths and parameters
+   Paths and options
    ========================================================================== */
 
 var paths = {
@@ -71,15 +71,15 @@ gulp.task("clean:cache", function() {
   return cache.clearAll();
 });
 
-gulp.task("clean", function(callback) {
-  gulpSequence(["clean:tmp", "clean:dist", "clean:cache"])(callback);
+gulp.task("clean", function(cb) {
+  gulpSequence(["clean:tmp", "clean:dist", "clean:cache"])(cb);
 });
 
 /* ==========================================================================
-   Generate HTML
+   HTML
    ========================================================================== */
 
-gulp.task("html:generate", function() {
+gulp.task("html:prebuild", function() {
   return gulp
     .src("src/*.pug")
     .pipe(
@@ -100,7 +100,7 @@ gulp.task("html:generate", function() {
     .pipe(gulp.dest(".tmp/"));
 });
 
-gulp.task("html:dist", function() {
+gulp.task("html:build", function() {
   return (
     gulp
       .src(".tmp/*.html")
@@ -113,7 +113,7 @@ gulp.task("html:dist", function() {
 });
 
 // htmlmin won't work together with useref at this time!
-gulp.task("html:minify", function() {
+gulp.task("html:minify", ["html:build"], function() {
   return gulp
     .src("dist/*.html")
     .pipe(
@@ -129,12 +129,6 @@ gulp.task("html:minify", function() {
     .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("html", function(callback) {
-  gulpSequence(
-    ["html:generate"]
-  )(callback);
-});
-
 gulp.task("html:validate", function() {
   return gulp
     .src("dist/[^google]*.html")
@@ -143,7 +137,7 @@ gulp.task("html:validate", function() {
 });
 
 /* ==========================================================================
-   Generate CSS
+   Styles
    ========================================================================== */
 
 gulp.task("styles:plugins", function() {
@@ -152,13 +146,6 @@ gulp.task("styles:plugins", function() {
     .pipe(
       plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
-    .pipe(changed("src/css/"))
-    .pipe(gulp.dest("src/css/"));
-});
-
-gulp.task("styles:plugins:copy", function() {
-  return gulp
-    .src("src/css/**/*.css")
     .pipe(changed(".tmp/css/"))
     .pipe(gulp.dest(".tmp/css/"));
 });
@@ -186,15 +173,14 @@ gulp.task("styles:main", function() {
     .pipe(gulp.dest(".tmp/css/"));
 });
 
-gulp.task("styles", function(callback) {
+gulp.task("styles:prebuild", function(cb) {
   gulpSequence([
     "styles:plugins",
-    "styles:plugins:copy",
     "styles:main"
-  ])(callback);
+  ])(cb);
 });
 
-gulp.task("styles:dist", function() {
+gulp.task("styles:build", function() {
   return gulp
     .src("dist/css/*")
     .pipe(
@@ -231,13 +217,13 @@ gulp.task("scripts:blocks", function() {
     .pipe(gulp.dest(".tmp/js/"));
 });
 
-gulp.task("scripts", function(callback) {
+gulp.task("scripts:prebuild", function(cb) {
   gulpSequence(
     ["scripts:common", "scripts:blocks"]
-  )(callback);
+  )(cb);
 });
 
-gulp.task("scripts:dist", function() {
+gulp.task("scripts:build", function() {
   return gulp
     .src(".tmp/js/[^_]*")
     .pipe(
@@ -248,10 +234,10 @@ gulp.task("scripts:dist", function() {
 });
 
 /* ==========================================================================
-   Optimize images
+   Images
    ========================================================================== */
 
-gulp.task("images:minify", function() {
+gulp.task("images:prebuild", function() {
   return gulp
     .src("src/images/**")
     .pipe(
@@ -274,38 +260,29 @@ gulp.task("images:minify", function() {
     .pipe(gulp.dest(".tmp/images/"));
 });
 
-/* Images: build and test
-   ========================================================================== */
-
-gulp.task("images", function(callback) {
-  gulpSequence(
-    ["images:minify"]
-  )(callback);
-});
-
-gulp.task("images:dist", function() {
+gulp.task("images:build", function() {
   return gulp
     .src("**/!(icons.svg)*", { cwd: ".tmp/images/" })
     .pipe(gulp.dest("dist/images/"));
 });
 
 /* ==========================================================================
-   Copy fonts
+   Fonts
    ========================================================================== */
 
-gulp.task("fonts", function() {
+gulp.task("fonts:prebuild", function() {
   return gulp
     .src("src/fonts/**")
     .pipe(changed(".tmp/fonts/"))
     .pipe(gulp.dest(".tmp/fonts/"));
 });
 
-gulp.task("fonts:dist", function() {
+gulp.task("fonts:build", function() {
   return gulp.src("src/fonts/**").pipe(gulp.dest("dist/fonts/"));
 });
   
 /* ==========================================================================
-   Watch the files
+   Watch
    ========================================================================== */
 
 gulp.task("watch", function() {
@@ -318,7 +295,7 @@ gulp.task("watch", function() {
     ],
     { readDelay: 200 },
     function () {
-      gulp.start("html:generate");
+      gulp.start("html:prebuild");
     }
   );
 
@@ -330,7 +307,7 @@ gulp.task("watch", function() {
     ],
     { readDelay: 200 },
     function() {
-      gulp.start("styles");
+      gulp.start("styles:prebuild");
     }
   );
 
@@ -341,7 +318,7 @@ gulp.task("watch", function() {
     ],
     { readDelay: 200 },
     function() {
-      gulp.start("images");
+      gulp.start("images:prebuild");
     }
   );
 
@@ -352,17 +329,17 @@ gulp.task("watch", function() {
     ],
     { readDelay: 200 },
     function() {
-      gulp.start("scripts");
+      gulp.start("scripts:prebuild");
     }
   );
 
   watch("src/fonts/*", { readDelay: 200 }, function() {
-    gulp.start("fonts");
+    gulp.start("fonts:prebuild");
   });
 });
 
 /* ==========================================================================
-   Launch local server
+   Start local server
    ========================================================================== */
 
 gulp.task("connect:tmp", function() {
@@ -373,7 +350,7 @@ gulp.task("connect:tmp", function() {
     reloadDebounce: 500
   });
   browserSync.watch(".tmp/*.html").on("change", browserSync.reload);
-  browserSync.watch(".tmp/css/main.css").on("change", browserSync.reload);
+  browserSync.watch(".tmp/css/*").on("change", browserSync.reload);
   browserSync.watch(".tmp/js/*").on("change", browserSync.reload);
   browserSync.watch(".tmp/fonts/*").on("change", browserSync.reload);
 });
@@ -387,33 +364,33 @@ gulp.task("connect:dist", function() {
 });
 
 /* ==========================================================================
-   Build & deploy
+   Serve
    ========================================================================== */
 
-gulp.task("prebuild", function(callback) {
+   gulp.task("serve", function(cb) {
+    gulpSequence(["prebuild"], ["connect:tmp"], ["watch"])(cb);
+  });
+  
+  gulp.task("default", ["serve"], function() {});
+
+/* ==========================================================================
+   Build
+   ========================================================================== */
+
+gulp.task("prebuild", function(cb) {
   gulpSequence(
     [
-    "images", "scripts", "fonts", "html", "styles"
+    "images:prebuild", "scripts:prebuild", "fonts:prebuild", "html:prebuild", "styles:prebuild"
     ]
-  )(callback);
+  )(cb);
 });
 
-gulp.task("build", function(callback) {
+gulp.task("build", function(cb) {
   gulpSequence(
     ["clean"],
     ["prebuild"],
-    ["html:dist"],
-    ["html:minify", "styles:dist", "scripts:dist", "images:dist", "fonts:dist"],
+    ["html:minify"],
+    ["styles:build", "scripts:build", "images:build", "fonts:build"],
     ["html:validate"]
-  )(callback);
+  )(cb);
 });
-
-/* ==========================================================================
-   Main tasks
-   ========================================================================== */
-
-gulp.task("serve", function(callback) {
-  gulpSequence(["prebuild"], ["connect:tmp"], ["watch"])(callback);
-});
-
-gulp.task("default", ["serve"], function() {});
