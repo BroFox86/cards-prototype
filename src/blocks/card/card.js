@@ -1,4 +1,5 @@
 function handleMouseEvents(cardNmb) {
+  "use strict";
 
   // Selectors
   var card        = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
@@ -14,35 +15,21 @@ function handleMouseEvents(cardNmb) {
 
   var footerContent;
 
+  // Initial state
+  var isClicked = false;
+
   /////////////////////////
   // Handle click events //
   /////////////////////////
 
   $(card).on("click", $(cardBtn), function(e) {
-
     e.preventDefault();
 
-    if ($(this).attr("data-click-state") == 1) {
-      // Clean states
-      $(this)
-        .attr("data-click-state", 0)
-        .removeClass("is-selected")
-        .removeClass("has-note");
-
-      // Restore initial data
-      $(this)
-        .find(cardFooter)
-        .text("")
-        .append(footerContent);
-      $(this)
-        .find(cardDesc)
-        .text(descText);
-
-    } else {
-      $(this)
-        .attr("data-click-state", 1)
-        .addClass("is-selected");
-
+    if (isClicked == false) {
+      // Add selected state
+      isClicked = true;
+      $(this).addClass("is-selected");
+      
       // Save the initial content
       footerContent = $(this)
         .find(cardFooter)
@@ -57,6 +44,22 @@ function handleMouseEvents(cardNmb) {
       $(this)
         .find(cardFooter)
         .text(selectedText);
+    } else {
+      // Restore states
+      isClicked = false;
+
+      $(this)
+        .removeClass("is-selected")
+        .removeClass("has-note");
+
+      // Restore the initial content
+      $(this)
+        .find(cardFooter)
+        .text("")
+        .append(footerContent);
+      $(this)
+        .find(cardDesc)
+        .text(descText);
     }
   });
 
@@ -65,7 +68,7 @@ function handleMouseEvents(cardNmb) {
   //////////////////////////////
 
   $(card).on("mouseleave", function() {
-    if ($(this).attr("data-click-state") == 1) {
+    if (isClicked == true) {
       $(this)
         .addClass("has-note")
         .find(cardDesc)
@@ -73,9 +76,9 @@ function handleMouseEvents(cardNmb) {
     }
   });
 
-  //////////////////////////
-  // Handle disable card  //
-  //////////////////////////
+  ////////////////////////////
+  // Handle disabled state  //
+  ////////////////////////////
 
   // Check if the card is disabled
   if ($(card).hasClass("is-disabled") == true) {
