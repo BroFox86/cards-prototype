@@ -21,18 +21,18 @@
   &__corner {
     position: relative;
     width: 43px;
-    background: linear-gradient(-45deg, white, white 28px, $accent 28px, $accent 32px, transparent 32px);
+    background: linear-gradient(-45deg, white, white 28.5px, $accent 28.5px, $accent 32px, transparent 32px);
 
     .card__body:hover & {
-      background: linear-gradient(-45deg, white, white 28px, $accent--hover 28px, $accent--hover 32px, transparent 32px);
+      background: linear-gradient(-45deg, white, white 28.5px, $accent--hover 28.5px, $accent--hover 32px, transparent 32px);
     }
 
     .card.is-selected & {
-      background: linear-gradient(-45deg, white, white 28px, $selected 28px, $selected 32px, transparent 32px);
+      background: linear-gradient(-45deg, white, white 28.5px, $selected 28.5px, $selected 32px, transparent 32px);
     }
 
     .card.is-disabled & {
-      background: linear-gradient(-45deg, white, white 28px, $disabled 28px, $disabled 32px, transparent 32px);
+      background: linear-gradient(-45deg, white, white 28.5px, $disabled 28.5px, $disabled 32px, transparent 32px);
     }
   }
 
