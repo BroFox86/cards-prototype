@@ -84,7 +84,7 @@ function handleMouseEvents(cardNmb) {
       .find(cardFeature)
       .text();
 
-    // Apply disabled state text
+    // Apply the disabled state text
     $(card)
       .off("click")
       .find(cardFooter)

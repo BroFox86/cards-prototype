@@ -225,12 +225,12 @@ gulp.task("scripts:prebuild", function(cb) {
 
 gulp.task("scripts:build", function() {
   return gulp
-    .src(".tmp/js/[^_]*")
+    .src("dist/js/*")
     .pipe(
       plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
     .pipe(uglify())
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulp.dest("dist/js/"));
 });
 
 /* ==========================================================================
