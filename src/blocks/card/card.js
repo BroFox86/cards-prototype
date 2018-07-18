@@ -2,15 +2,15 @@ function handleMouseEvents(cardNmb) {
   "use strict";
 
   // Selectors
-  var card        = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
-      cardBtn     = "[data-trigger='card']",
-      cardDesc    = "[data-replace='desc']",
-      cardFeature = "[data-get='feature']",
-      cardFooter  = "[data-replace='footer']";
+  var card    = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
+      btn     = "[data-trigger='cardBtn']",
+      desc    = "[data-replace='cardDesc']",
+      feature = "[data-get='cardFeature']",
+      footer  = "[data-replace='cardFooter']";
 
   // Initial content
   var descText = $(card)
-    .find(cardDesc)
+    .find(desc)
     .text();
 
   var footerContent;
@@ -22,7 +22,7 @@ function handleMouseEvents(cardNmb) {
   // Handle click events //
   /////////////////////////
 
-  $(card).on("click", $(cardBtn), function(e) {
+  $(card).on("click", $(btn), function(e) {
     e.preventDefault();
 
     if (isClicked == false) {
@@ -32,17 +32,17 @@ function handleMouseEvents(cardNmb) {
       
       // Save the initial content
       footerContent = $(this)
-        .find(cardFooter)
+        .find(footer)
         .children()
         .detach();
 
       var selectedText = $(this)
-        .find(cardFooter)
+        .find(footer)
         .data("text");
 
       // Add text to card footer
       $(this)
-        .find(cardFooter)
+        .find(footer)
         .text(selectedText);
     } else {
       // Restore states
@@ -54,11 +54,11 @@ function handleMouseEvents(cardNmb) {
 
       // Restore the initial content
       $(this)
-        .find(cardFooter)
+        .find(footer)
         .text("")
         .append(footerContent);
       $(this)
-        .find(cardDesc)
+        .find(desc)
         .text(descText);
     }
   });
@@ -71,7 +71,7 @@ function handleMouseEvents(cardNmb) {
     if (isClicked == true) {
       $(this)
         .addClass("has-note")
-        .find(cardDesc)
+        .find(desc)
         .text("Котэ не одобряет?");
     }
   });
@@ -84,13 +84,13 @@ function handleMouseEvents(cardNmb) {
   if ($(card).hasClass("is-disabled") == true) {
     // Get the feature text
     var featureText = $(card)
-      .find(cardFeature)
+      .find(feature)
       .text();
 
     // Apply the disabled state text
     $(card)
       .off("click")
-      .find(cardFooter)
+      .find(footer)
       .html("Печалька, " + featureText + " закончился.");
   }
 }

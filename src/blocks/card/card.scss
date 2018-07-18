@@ -21,18 +21,18 @@
   &__corner {
     position: relative;
     width: 43px;
-    @include slant-border($accent);
+    @include slanted-border($accent);
 
     .card__body:hover & {
-      @include slant-border($accent--hover);
+      @include slanted-border($accent--hover);
     }
 
     .card.is-selected & {
-      @include slant-border($selected);
+      @include slanted-border($selected);
     }
 
     .card.is-disabled & {
-      @include slant-border($disabled);
+      @include slanted-border($disabled);
     }
   }
 
@@ -100,7 +100,7 @@
   &__heading {
     position: relative;
     z-index: 10;
-    margin-bottom: 15px;
+    margin: 0 0 15px;
     font-size: 48px;
   }
 
@@ -112,6 +112,9 @@
   &__list {
     position: relative;
     z-index: 10;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     color: $dimmed;
     font-size: 14px;
     line-height: 16px;
