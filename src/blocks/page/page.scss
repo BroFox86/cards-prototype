@@ -47,7 +47,7 @@
     height: inherit;
 
     @media (max-width: $container) {
-      align-items: flex-start; // For compatibility with IE
+      align-items: flex-start; // For IE
     }
   }
 

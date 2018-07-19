@@ -1,7 +1,6 @@
 function handleMouseEvents(cardNmb) {
   "use strict";
 
-  // Selectors
   var card    = "[data-target='card']" + ":nth-child(" + cardNmb + ")",
       btn     = "[data-trigger='cardBtn']",
       desc    = "[data-replace='cardDesc']",
@@ -13,20 +12,15 @@ function handleMouseEvents(cardNmb) {
     .find(desc)
     .text();
 
-  var footerContent;
+  var footerContent,
+      isClicked = false;
 
-  // Initial state
-  var isClicked = false;
-
-  /////////////////////////
-  // Handle click events //
-  /////////////////////////
+  /* Handle click events */
 
   $(card).on("click", $(btn), function(e) {
     e.preventDefault();
 
     if (isClicked == false) {
-      // Add selected state
       isClicked = true;
       $(this).addClass("is-selected");
       
@@ -40,12 +34,10 @@ function handleMouseEvents(cardNmb) {
         .find(footer)
         .data("text");
 
-      // Add text to card footer
       $(this)
         .find(footer)
         .text(selectedText);
     } else {
-      // Restore states
       isClicked = false;
 
       $(this)
@@ -63,9 +55,7 @@ function handleMouseEvents(cardNmb) {
     }
   });
 
-  //////////////////////////////
-  // Handle mouseleave events //
-  //////////////////////////////
+  /* Handle mouseleave events */
 
   $(card).on("mouseleave", function() {
     if (isClicked == true) {
@@ -76,18 +66,13 @@ function handleMouseEvents(cardNmb) {
     }
   });
 
-  ////////////////////////////
-  // Handle disabled state  //
-  ////////////////////////////
+  /* Handle disabled states */
 
-  // Check if the card is disabled
   if ($(card).hasClass("is-disabled") == true) {
-    // Get the feature text
     var featureText = $(card)
       .find(feature)
       .text();
 
-    // Apply the disabled state text
     $(card)
       .off("click")
       .find(footer)
@@ -95,10 +80,10 @@ function handleMouseEvents(cardNmb) {
   }
 }
 
-// Get the number of cards
+/* Add the event listener to each of the card */
+
 var cards = $("[data-target='card']").length;
 
-// Add the event listener to each of the card
 for (var i = 1; i <= cards; i++) {
   handleMouseEvents(i);
 }
