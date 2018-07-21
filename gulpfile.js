@@ -36,9 +36,7 @@ var // Common
   uglify = require("gulp-uglify"),
   // Images
   cache                  = require("gulp-cache"),
-  imagemin               = require("gulp-imagemin"),
-  imageminSvgo           = require("imagemin-svgo"),
-  imageminJpegRecompress = require("imagemin-jpeg-recompress");
+  imagemin               = require("gulp-imagemin");
 
 /* ==========================================================================
    Paths and options
@@ -247,13 +245,7 @@ gulp.task("images:prebuild", function() {
     .pipe(
       cache(
         imagemin([
-          imagemin.optipng(),
-          imageminJpegRecompress({
-            target: 0.8
-          }),
-          imageminSvgo({
-            plugins: [{ removeViewBox: false }]
-          })
+          imagemin.optipng()
         ])
       )
     )
@@ -262,7 +254,7 @@ gulp.task("images:prebuild", function() {
 
 gulp.task("images:build", function() {
   return gulp
-    .src("**/!(icons.svg)*", { cwd: ".tmp/images/" })
+    .src("**/*", { cwd: ".tmp/images/" })
     .pipe(gulp.dest("dist/images/"));
 });
 
@@ -390,7 +382,12 @@ gulp.task("build", function(cb) {
     ["clean"],
     ["prebuild"],
     ["html:minify"],
-    ["styles:build", "scripts:build", "images:build", "fonts:build"],
+    [
+      "styles:build", 
+      "scripts:build", 
+      "images:build", 
+      "fonts:build"
+    ],
     ["html:validate"]
   )(cb);
 });
